@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Škola Hipokrat — Medicinska škola, Novi Pazar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b1f3a;
+    --teal: #00a896;
+    --teal-dark: #007a6e;
+    --coral: #f4623a;
+    --cream: #f7f4ef;
+    --white: #ffffff;
+    --gray: #6b7280;
+    --light: #e8e4de;
+    --text: #1a2332;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 70px;
+    background: rgba(11,31,58,0.97);
+    backdrop-filter: blur(12px);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,.3); }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    color: var(--white);
+    letter-spacing: .5px;
+  }
+  .nav-logo-text span { color: var(--teal); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 500;
+    letter-spacing: .3px;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  .nav-cta {
+    background: var(--coral);
+    color: var(--white) !important;
+    padding: .5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    transition: background .2s, transform .1s !important;
+  }
+  .nav-cta:hover { background: #d94e27 !important; transform: translateY(-1px); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--white);
+    transition: all .3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 70px; left: 0; right: 0;
+    background: var(--navy);
+    padding: 1.5rem 5vw 2rem;
+    z-index: 99;
+    flex-direction: column; gap: 1rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: .4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .mobile-menu .nav-cta {
+    display: inline-block;
+    margin-top: .5rem;
+    text-align: center;
+    padding: .75rem;
+    border-radius: 8px;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 120px 5vw 80px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 80% 50%, rgba(0,168,150,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(244,98,58,.07) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: .04;
+    background-image:
+      linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,168,150,.15);
+    border: 1px solid rgba(0,168,150,.3);
+    color: var(--teal);
+    font-size: .8rem; font-weight: 600;
+    letter-spacing: .8px; text-transform: uppercase;
+    padding: .4rem .9rem; border-radius: 100px;
+    margin-bottom: 2rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .3; }
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    animation: fadeUp .6s .1s ease both;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--teal);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,.65);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp .6s .2s ease both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp .6s .3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--coral);
+    color: var(--white);
+    padding: .85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: .95rem;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(244,98,58,.3);
+  }
+  .btn-primary:hover {
+    background: #d94e27;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(244,98,58,.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: .85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: .95rem;
+    border: 1px solid rgba(255,255,255,.25);
+    transition: border-color .2s, background .2s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--teal);
+    background: rgba(0,168,150,.1);
+  }
+
+  .hero-float {
+    position: absolute; right: 5vw; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 1rem;
+    animation: fadeLeft .7s .4s ease both;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 150px;
+  }
+  .stat-card .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--teal);
+    display: block;
+  }
+  .stat-card .lbl {
+    font-size: .78rem;
+    color: rgba(255,255,255,.55);
+    letter-spacing: .3px;
+  }
+
+  /* ── TRUST BAR ── */
+  #trust {
+    background: var(--teal);
+    padding: 1.2rem 5vw;
+    display: flex; align-items: center;
+    justify-content: center; gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: .6rem;
+    color: var(--white);
+    font-size: .88rem; font-weight: 500;
+  }
+  .trust-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 90px 5vw; }
+
+  .section-label {
+    display: inline-block;
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: .75rem;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--gray);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--white);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-text p {
+    color: var(--gray);
+    line-height: 1.8;
+    margin-top: 1.2rem;
+    font-size: .97rem;
+  }
+  .about-highlights {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  .highlight-chip {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    display: flex; align-items: flex-start; gap: .7rem;
+  }
+  .highlight-chip svg { width: 20px; height: 20px; color: var(--teal); flex-shrink: 0; margin-top: 2px; }
+  .highlight-chip p { font-size: .83rem; font-weight: 600; color: var(--navy); line-height: 1.4; }
+
+  .about-visual {
+    position: relative;
+  }
+  .about-card-main {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 3rem;
+    color: var(--white);
+    position: relative; overflow: hidden;
+  }
+  .about-card-main::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,168,150,.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .about-card-main h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem; margin-bottom: .5rem;
+  }
+  .about-card-main p { color: rgba(255,255,255,.65); font-size: .9rem; line-height: 1.7; }
+  .about-card-main .big-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: var(--teal);
+    line-height: 1;
+    margin: 1.5rem 0 .3rem;
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: -20px; left: -20px;
+    background: var(--coral);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: .85rem; font-weight: 600;
+    box-shadow: 0 8px 30px rgba(244,98,58,.3);
+    max-width: 200px;
+    line-height: 1.4;
+  }
+
+  /* ── PROGRAMS ── */
+  #programs { background: var(--cream); }
+
+  .programs-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 2.5rem;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+
+  .filter-tabs {
+    display: flex; gap: .5rem; flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: var(--white);
+    border: 1px solid var(--light);
+    color: var(--gray);
+    padding: .45rem 1rem;
+    border-radius: 100px;
+    font-size: .83rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .prog-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 1.5rem;
+    border: 1px solid var(--light);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    cursor: default;
+  }
+  .prog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,.08);
+    border-color: var(--teal);
+  }
+  .prog-icon {
+    width: 44px; height: 44px;
+    background: rgba(0,168,150,.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    color: var(--teal);
+  }
+  .prog-icon svg { width: 22px; height: 22px; }
+  .prog-card h4 {
+    font-size: .95rem; font-weight: 600;
+    color: var(--navy); margin-bottom: .5rem;
+    line-height: 1.35;
+  }
+  .prog-badge {
+    display: inline-block;
+    font-size: .7rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    padding: .2rem .6rem;
+    border-radius: 4px;
+  }
+  .badge-iv { background: rgba(0,168,150,.12); color: var(--teal-dark); }
+  .badge-iii { background: rgba(244,98,58,.1); color: #c04a1f; }
+  .badge-v { background: rgba(11,31,58,.1); color: var(--navy); }
+
+  /* ── WHY ── */
+  #why { background: var(--navy); }
+  #why h2, #why .section-label { color: var(--white); }
+  #why .section-sub { color: rgba(255,255,255,.5); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .why-card {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: background .2s, border-color .2s;
+  }
+  .why-card:hover {
+    background: rgba(0,168,150,.1);
+    border-color: rgba(0,168,150,.3);
+  }
+  .why-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--teal);
+    opacity: .4;
+    line-height: 1;
+    margin-bottom: .75rem;
+  }
+  .why-card h3 {
+    font-size: 1rem; font-weight: 600;
+    color: var(--white); margin-bottom: .6rem;
+  }
+  .why-card p {
+    font-size: .85rem;
+    color: rgba(255,255,255,.5);
+    line-height: 1.7;
+  }
+
+  /* ── ENROLLMENT CTA ── */
+  #enroll {
+    background: var(--coral);
+    padding: 70px 5vw;
+    text-align: center;
+  }
+  #enroll h2 { color: var(--white); }
+  #enroll p { color: rgba(255,255,255,.8); margin: 1rem auto 2rem; max-width: 500px; }
+  .btn-white {
+    background: var(--white);
+    color: var(--coral);
+    padding: .9rem 2.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: .95rem;
+    display: inline-block;
+    transition: transform .15s, box-shadow .2s;
+  }
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,.2);
+  }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--white); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .testi-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+  }
+  .testi-card::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 5rem;
+    color: var(--teal);
+    opacity: .2;
+    position: absolute;
+    top: .5rem; left: 1.5rem;
+    line-height: 1;
+  }
+  .testi-card p {
+    font-size: .92rem;
+    color: var(--text);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .testi-author {
+    display: flex; align-items: center; gap: .75rem;
+  }
+  .testi-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .testi-name { font-size: .88rem; font-weight: 600; color: var(--navy); }
+  .testi-role { font-size: .78rem; color: var(--gray); }
+
+  /* ── NEWS ── */
+  #news { background: var(--cream); }
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .news-card {
+    background: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--light);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,.08);
+  }
+  .news-img {
+    height: 180px;
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: flex-end;
+    padding: 1.2rem;
+  }
+  .news-img::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(11,31,58,.7) 0%, transparent 60%);
+  }
+  .news-date {
+    background: var(--teal);
+    color: var(--white);
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .5px;
+    padding: .25rem .6rem;
+    border-radius: 4px;
+    position: relative; z-index: 1;
+  }
+  .news-body { padding: 1.3rem; }
+  .news-body h4 {
+    font-size: .95rem; font-weight: 600;
+    color: var(--navy); line-height: 1.4;
+    margin-bottom: .5rem;
+  }
+  .news-body p { font-size: .83rem; color: var(--gray); line-height: 1.6; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--white); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+  .contact-info h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 1.3rem;
+  }
+  .contact-icon {
+    width: 38px; height: 38px;
+    background: rgba(0,168,150,.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--teal); flex-shrink: 0;
+  }
+  .contact-icon svg { width: 18px; height: 18px; }
+  .contact-item-text .lbl {
+    font-size: .75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .8px;
+    color: var(--gray); margin-bottom: .2rem;
+  }
+  .contact-item-text p, .contact-item-text a {
+    font-size: .9rem; color: var(--navy);
+    text-decoration: none; line-height: 1.5;
+  }
+  .contact-item-text a:hover { color: var(--teal); }
+
+  .contact-form {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+  .contact-form h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem; color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label {
+    display: block;
+    font-size: .78rem; font-weight: 600;
+    color: var(--gray); margin-bottom: .4rem;
+    letter-spacing: .3px;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--light);
+    border-radius: 8px;
+    padding: .7rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    color: var(--text);
+    transition: border-color .2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--teal);
+  }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .btn-form {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: .85rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem; font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background .2s, transform .15s;
+  }
+  .btn-form:hover { background: var(--teal); transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 60px 5vw 30px;
+    color: rgba(255,255,255,.6);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    margin-bottom: 2rem;
+  }
+  .footer-brand p {
+    font-size: .88rem;
+    line-height: 1.7;
+    margin: 1rem 0 1.5rem;
+  }
+  .social-links { display: flex; gap: .75rem; }
+  .social-link {
+    width: 34px; height: 34px;
+    background: rgba(255,255,255,.08);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.6);
+    text-decoration: none;
+    transition: background .2s, color .2s;
+    font-size: .75rem; font-weight: 700;
+  }
+  .social-link:hover { background: var(--teal); color: var(--white); }
+  .footer-col h4 {
+    color: var(--white);
+    font-size: .85rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: .6rem; }
+  .footer-col ul a {
+    color: rgba(255,255,255,.55);
+    text-decoration: none; font-size: .85rem;
+    transition: color .2s;
+  }
+  .footer-col ul a:hover { color: var(--teal); }
+  .footer-bottom {
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 1rem;
+    font-size: .8rem;
+  }
+  .footer-bottom a { color: var(--teal); text-decoration: none; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-float { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 60px 5vw; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .about-highlights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18" cy="18" r="18" fill="#00a896" opacity=".15"/>
+      <rect x="16" y="6" width="4" height="24" rx="2" fill="#00a896"/>
+      <rect x="6" y="14" width="24" height="4" rx="2" fill="#00a896"/>
+      <circle cx="18" cy="10" r="3" fill="#f4623a"/>
+    </svg>
+    <span class="nav-logo-text">HIPO<span>KRAT</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">O školi</a></li>
+    <li><a href="#programs">Smerovi</a></li>
+    <li><a href="#why">Zašto mi</a></li>
+    <li><a href="#news">Novosti</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+    <li><a href="#contact" class="nav-cta">Upiši se</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">O školi</a>
+  <a href="#programs" onclick="toggleMenu()">Smerovi obrazovanja</a>
+  <a href="#why" onclick="toggleMenu()">Zašto Hipokrat</a>
+  <a href="#news" onclick="toggleMenu()">Novosti</a>
+  <a href="#contact" onclick="toggleMenu()">Kontakt</a>
+  <a href="#contact" class="nav-cta" onclick="toggleMenu()">Upiši se →</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Upis u toku — 2025/2026</div>
+    <h1>Obrazovanje koje<br><em>otvara vrata</em><br>budućnosti.</h1>
+    <p class="hero-sub">Jedina privatna medicinska škola čija diploma je priznata u Crnoj Gori i zemljama EU. Upis bez stresa — ocene ne odlučuju.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Upiši se danas →</a>
+      <a href="#programs" class="btn-secondary">Pogledaj smerove</a>
+    </div>
+  </div>
+  <div class="hero-float">
+    <div class="stat-card">
+      <span class="num">25+</span>
+      <span class="lbl">godina iskustva</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">1000+</span>
+      <span class="lbl">diplomiranih</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">20+</span>
+      <span class="lbl">akreditovanih smerova</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div id="trust">
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+    Akreditovana škola
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+    Diploma priznata u EU i CG
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+    Upis bez bodova
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    Mali razredi, individualni pristup
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="section-label">O nama</span>
+      <h2>Više od 25 godina izvrsnosti u obrazovanju</h2>
+      <p>Škola Hipokrat u Novom Pazaru je jedna od prvih i najstarijih privatnih škola u Srbiji. Naša misija je da svakom učeniku pružimo kvalitetno obrazovanje uz individualni pristup i podršku stručnog tima.</p>
+      <p>Primenjujemo aktivne metode učenja koje pomažu pri boljem razumevanju gradiva, razvoju praktičnih veština i pripremi za realni svet rada.</p>
+      <div class="about-highlights">
+        <div class="highlight-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <p>Redovno, vanredno i uporedno školovanje</p>
+        </div>
+        <div class="highlight-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <p>Stručni i posvećeni nastavnici</p>
+        </div>
+        <div class="highlight-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <p>Praktična nastava i radionice</p>
+        </div>
+        <div class="highlight-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <p>Savremeni pristupi učenju</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal reveal-delay-2">
+      <div class="about-card-main">
+        <h3>Stremimo ka izvrsnosti</h3>
+        <p>Naša diploma otvara vrata ka daljem obrazovanju i zapošljavanju — u Srbiji, Crnoj Gori i Evropskoj uniji.</p>
+        <div class="big-num">1000+</div>
+        <p>učenika koji su izgradili uspešnu karijeru zahvaljujući Školi Hipokrat.</p>
+      </div>
+      <div class="about-badge">
+        🎓 Jedina privatna škola sa diplomom priznatom u Crnoj Gori
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section id="programs">
+  <div class="programs-header">
+    <div class="reveal">
+      <span class="section-label">Smerovi obrazovanja</span>
+      <h2>Izaberi svoju<br>budućnost</h2>
+    </div>
+    <div class="filter-tabs reveal">
+      <button class="filter-btn active" onclick="filterPrograms('all', this)">Svi</button>
+      <button class="filter-btn" onclick="filterPrograms('iv', this)">IV stepen</button>
+      <button class="filter-btn" onclick="filterPrograms('iii', this)">III stepen</button>
+      <button class="filter-btn" onclick="filterPrograms('v', this)">Specijalizacija</button>
+    </div>
+  </div>
+  <div class="programs-grid" id="programsGrid">
+    <div class="prog-card reveal" data-cat="iv">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <h4>Medicinska sestra – tehničar</h4>
+      <span class="prog-badge badge-iv">IV stepen</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-1" data-cat="iv">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+      <h4>Farmaceutski tehničar</h4>
+      <span class="prog-badge badge-iv">IV stepen</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-2" data-cat="iv">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <h4>Laboratorijski tehničar</h4>
+      <span class="prog-badge badge-iv">IV stepen</span>
+    </div>
+    <div class="prog-card reveal" data-cat="iv">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <h4>Fizioterapeutski tehničar</h4>
+      <span class="prog-badge badge-iv">IV stepen</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-1" data-cat="iv">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+      <h4>Pedijatrijska sestra – tehničar</h4>
+      <span class="prog-badge badge-iv">IV stepen</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-2" data-cat="iv">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg></div>
+      <h4>Kozmetički tehničar</h4>
+      <span class="prog-badge badge-iv">IV stepen</span>
+    </div>
+    <div class="prog-card reveal" data-cat="iii">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <h4>Zdravstveni negovatelj</h4>
+      <span class="prog-badge badge-iii">III stepen</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-1" data-cat="iii">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <h4>Ženski frizer</h4>
+      <span class="prog-badge badge-iii">III stepen</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-2" data-cat="iii">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <h4>Muški frizer</h4>
+      <span class="prog-badge badge-iii">III stepen</span>
+    </div>
+    <div class="prog-card reveal" data-cat="v">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <h4>Medicinska sestra za anesteziju i reanimaciju</h4>
+      <span class="prog-badge badge-v">Specijalizacija</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-1" data-cat="v">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <h4>Medicinska sestra za kardiovaskularnu dijagnostiku</h4>
+      <span class="prog-badge badge-v">Specijalizacija</span>
+    </div>
+    <div class="prog-card reveal reveal-delay-2" data-cat="v">
+      <div class="prog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+      <h4>Farmaceutski tehničar za tehnologiju lekova</h4>
+      <span class="prog-badge badge-v">Specijalizacija</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div style="text-align:center; max-width:600px; margin:0 auto 0;" class="reveal">
+    <span class="section-label">Zašto Hipokrat</span>
+    <h2>Škola koja stoji iza svakog učenika</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.5); margin: .5rem auto 0;">Odabirom Škole Hipokrat, birate više od diplome.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-num">01</div>
+      <h3>Diploma priznata u EU i Crnoj Gori</h3>
+      <p>Jedina privatna škola u Srbiji čija je diploma zvanično priznata u Crnoj Gori i otvorena prema standardima EU.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-1">
+      <div class="why-num">02</div>
+      <h3>Upis bez stresa — bez bodova</h3>
+      <p>Za upis u našu školu nije presudna ocena sa male mature ni broj bodova — jedino što je važno je ocena iz vladanja.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-num">03</div>
+      <h3>Individualni mentorski pristup</h3>
+      <p>Mali razredi i posvećeni nastavnici garantuju da svaki učenik dobija pažnju i podršku koja mu je potrebna.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-3">
+      <div class="why-num">04</div>
+      <h3>Savremeni kurikulum i praksa</h3>
+      <p>Kombinujemo teorijsko znanje sa praktičnom nastavom, radionicama i projektima koji pripremaju učenike za realni svet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ENROLL CTA -->
+<section id="enroll">
+  <span class="section-label" style="color:rgba(255,255,255,.7)">Generacija 2025/2026</span>
+  <h2>Upis je u toku.<br>Ne čekaj — mesta su ograničena.</h2>
+  <p>Pošalji dokumentaciju poštom ili e-mailom i osiguraj svoje mesto u najboljoj medicinskoj školi u regionu.</p>
+  <a href="#contact" class="btn-white">Kontaktiraj nas →</a>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="reveal" style="text-align:center; max-width:500px; margin:0 auto 0;">
+    <span class="section-label">Utisci učenika</span>
+    <h2>Šta kažu naši polaznici</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <p>Odlična atmosfera, sjajni nastavnici i praktičan pristup učenju. Škola Hipokrat me je pripremila za sve izazove koji me čekaju u budućnosti.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">M</div>
+        <div>
+          <div class="testi-name">Milica Simić</div>
+          <div class="testi-role">Medicinska sestra – tehničar</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-1">
+      <p>U Školi Hipokrat sam stekao ne samo obrazovanje, već i prijatelje za ceo život. Preporučio bih je svakome ko želi kvalitetno obrazovanje i podršku.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">S</div>
+        <div>
+          <div class="testi-name">Stefan Đorđević</div>
+          <div class="testi-role">Laboratorijski tehničar</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-2">
+      <p>Diploma Škole Hipokrat mi je otvorila mnoga vrata, posebno u Crnoj Gori. Zahvalna sam na mentorskom pristupu i inspirativnoj atmosferi.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Ana Petrović</div>
+          <div class="testi-role">Farmaceutski tehničar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="reveal">
+    <span class="section-label">Novosti</span>
+    <h2>Iz škole</h2>
+  </div>
+  <div class="news-grid">
+    <div class="news-card reveal">
+      <div class="news-img" style="background:linear-gradient(135deg,#0b3d6b,#00a896);">
+        <span class="news-date">11. jul 2025.</span>
+      </div>
+      <div class="news-body">
+        <h4>Među najboljima — naši učenici ostvarili odlične rezultate</h4>
+        <p>Ponosni smo na naše učenike koji su još jednom pokazali da Hipokrat obrazuje buduće lidere u zdravstvu.</p>
+      </div>
+    </div>
+    <div class="news-card reveal reveal-delay-1">
+      <div class="news-img" style="background:linear-gradient(135deg,#1a2f4a,#f4623a);">
+        <span class="news-date">9. jun 2025.</span>
+      </div>
+      <div class="news-body">
+        <h4>Jedna od prvih i najstarijih privatnih škola u Srbiji</h4>
+        <p>Hipokrat slavi decenijama dugačku tradiciju kvalitetnog medicinskog obrazovanja u Novom Pazaru.</p>
+      </div>
+    </div>
+    <div class="news-card reveal reveal-delay-2">
+      <div class="news-img" style="background:linear-gradient(135deg,#0d2744,#007a6e);">
+        <span class="news-date">5. jun 2025.</span>
+      </div>
+      <div class="news-body">
+        <h4>Upis generacije 2025/2026 — Prijavite se već danas</h4>
+        <p>Otvorene prijave za novu školsku godinu. Broj mesta je ograničen — ne propustite svoju priliku.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <span class="section-label">Kontakt</span>
+    <h2>Javite nam se</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h3>Informacije o školi</h3>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="contact-item-text">
+          <div class="lbl">Adresa</div>
+          <p>Save Kovačevića bb<br>36300 Novi Pazar</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="contact-item-text">
+          <div class="lbl">Telefon</div>
+          <a href="tel:020311037">020/311-037</a><br>
+          <a href="tel:0655640641">065/564-0641</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-item-text">
+          <div class="lbl">Email</div>
+          <a href="mailto:office@skolahipokrat.edu.rs">office@skolahipokrat.edu.rs</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="contact-item-text">
+          <div class="lbl">Radno vreme</div>
+          <p>Pon–Pet: 7:00 – 20:00<br>Subota: 8:00 – 13:00</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal reveal-delay-1">
+      <h3>Pošaljite upit</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ime i prezime</label>
+          <input type="text" placeholder="Vaše ime">
+        </div>
+        <div class="form-group">
+          <label>Email adresa</label>
+          <input type="email" placeholder="vasa@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Telefon</label>
+        <input type="tel" placeholder="+381 ...">
+      </div>
+      <div class="form-group">
+        <label>Poruka</label>
+        <textarea placeholder="Postavite pitanje ili se prijavite za upis..."></textarea>
+      </div>
+      <button class="btn-form">Pošalji poruku →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="margin-bottom:.5rem; display:inline-flex;">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:32px;height:32px;">
+          <circle cx="18" cy="18" r="18" fill="#00a896" opacity=".15"/>
+          <rect x="16" y="6" width="4" height="24" rx="2" fill="#00a896"/>
+          <rect x="6" y="14" width="24" height="4" rx="2" fill="#00a896"/>
+          <circle cx="18" cy="10" r="3" fill="#f4623a"/>
+        </svg>
+        <span class="nav-logo-text" style="font-size:1.2rem;">HIPO<span>KRAT</span></span>
+      </a>
+      <p>Stremimo ka izvrsnosti u obrazovanju. Jedna od prvih i najstarijih privatnih škola u Srbiji — od 1999. godine.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/hipokratskola/" class="social-link" target="_blank">IG</a>
+        <a href="https://www.facebook.com/SrednjaSkolaHipokratNoviPazar/" class="social-link" target="_blank">FB</a>
+        <a href="https://www.youtube.com/channel/UCR0Q4TJNivK-tF357J0Hh7w" class="social-link" target="_blank">YT</a>
+        <a href="https://twitter.com/SHipokrat" class="social-link" target="_blank">TW</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigacija</h4>
+      <ul>
+        <li><a href="#about">O školi</a></li>
+        <li><a href="#programs">Smerovi obrazovanja</a></li>
+        <li><a href="#why">Zašto Hipokrat</a></li>
+        <li><a href="#testimonials">Utisci učenika</a></li>
+        <li><a href="#news">Novosti</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <ul>
+        <li><a href="#">Save Kovačevića bb, Novi Pazar</a></li>
+        <li><a href="tel:020311037">020/311-037</a></li>
+        <li><a href="tel:0655640641">065/564-0641</a></li>
+        <li><a href="mailto:office@skolahipokrat.edu.rs">office@skolahipokrat.edu.rs</a></li>
+        <li><a href="#">Pon–Pet: 7:00–20:00</a></li>
+        <li><a href="#">Sub: 8:00–13:00</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Srednja škola Hipokrat, Novi Pazar. Sva prava zadržana.</span>
+    <span>Izgrađeno sa ❤ za obrazovanje</span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Program filter
+  function filterPrograms(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.prog-card').forEach(card => {
+      const show = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = show ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
