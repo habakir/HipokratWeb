@@ -111,7 +111,7 @@
   /* ── HERO ── */
   #hero {
     min-height: 100vh;
-    background: var(--navy);
+    background: var(--navy) url('building.jpg') center 30% / cover no-repeat;
     display: flex; align-items: center;
     position: relative; overflow: hidden;
     padding: 120px 5vw 80px;
@@ -120,8 +120,9 @@
   .hero-bg {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 60% 70% at 80% 50%, rgba(0,168,150,.12) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(244,98,58,.07) 0%, transparent 60%);
+      radial-gradient(ellipse 60% 70% at 80% 50%, rgba(0,168,150,.2) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(244,98,58,.1) 0%, transparent 60%),
+      linear-gradient(rgba(11,31,58,.80), rgba(11,31,58,.80));
   }
 
   .hero-grid {
@@ -322,39 +323,31 @@
   .about-visual {
     position: relative;
   }
-  .building-photo-card {
+  .about-card-main {
+    background: var(--navy);
     border-radius: 20px 20px 0 0;
-    overflow: hidden;
-    position: relative;
+    padding: 3rem;
+    color: var(--white);
+    position: relative; overflow: hidden;
   }
-  .building-photo-card img {
-    width: 100%; height: 380px;
-    object-fit: cover;
-    object-position: center 30%;
-    display: block;
+  .about-card-main::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,168,150,.3) 0%, transparent 70%);
+    border-radius: 50%;
   }
-  .building-overlay {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    background: linear-gradient(to top, rgba(11,31,58,.88) 0%, rgba(11,31,58,.3) 55%, transparent 100%);
-    padding: 2.5rem 2rem 1.8rem;
-  }
-  .building-overlay .big-num {
+  .about-card-main h3 {
     font-family: 'DM Serif Display', serif;
-    font-size: 3.8rem; color: var(--teal);
-    line-height: 1; margin-bottom: .25rem;
+    font-size: 1.6rem; margin-bottom: .5rem;
   }
-  .building-overlay p {
-    color: rgba(255,255,255,.75); font-size: .88rem; line-height: 1.5;
-  }
-  .building-overlay .school-tag {
-    display: inline-block;
-    background: rgba(0,168,150,.25);
-    border: 1px solid rgba(0,168,150,.4);
+  .about-card-main p { color: rgba(255,255,255,.65); font-size: .9rem; line-height: 1.7; }
+  .about-card-main .big-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
     color: var(--teal);
-    font-size: .7rem; font-weight: 700;
-    letter-spacing: 1px; text-transform: uppercase;
-    padding: .3rem .7rem; border-radius: 100px;
-    margin-bottom: 1.2rem;
+    line-height: 1;
+    margin: 1.5rem 0 .3rem;
   }
 
   .about-badge {
@@ -975,7 +968,6 @@
     .mode-btn { flex: 1; font-size: .83rem; padding: .6rem .8rem; }
     .programs-grid { grid-template-columns: 1fr 1fr; }
     .vanredno-types { grid-template-columns: 1fr 1fr; }
-    .building-photo-card img { height: 300px; }
   }
   @media (max-width: 600px) {
     section { padding: 60px 4vw; }
@@ -990,8 +982,6 @@
     .contact-form { padding: 1.5rem; }
     .modal-box { padding: 1.5rem; border-radius: 16px; }
     .modal-img { margin: -1.5rem -1.5rem 1.5rem; }
-    .building-photo-card img { height: 260px; }
-    .building-overlay .big-num { font-size: 3rem; }
     .footer-bottom { flex-direction: column; text-align: center; }
     .testi-grid { grid-template-columns: 1fr; }
     .news-grid { grid-template-columns: 1fr; }
@@ -1112,13 +1102,11 @@
       </div>
     </div>
     <div class="about-visual reveal reveal-delay-2">
-      <div class="building-photo-card">
-        <img src="building.jpg" alt="Škola Hipokrat — zgrada u Novom Pazaru">
-        <div class="building-overlay">
-          <span class="school-tag">Škola Hipokrat · Novi Pazar</span>
-          <div class="big-num">1000+</div>
-          <p>učenika koji su izgradili uspešnu karijeru zahvaljujući Školi Hipokrat.</p>
-        </div>
+      <div class="about-card-main">
+        <h3>Stremimo ka izvrsnosti</h3>
+        <p>Naša diploma otvara vrata ka daljem obrazovanju i zapošljavanju — u Srbiji, Crnoj Gori i Evropskoj uniji.</p>
+        <div class="big-num">1000+</div>
+        <p>učenika koji su izgradili uspešnu karijeru zahvaljujući Školi Hipokrat.</p>
       </div>
       <div class="about-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;opacity:.9"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
